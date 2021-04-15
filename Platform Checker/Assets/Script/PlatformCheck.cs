@@ -14,7 +14,10 @@ public class PlatformCheck : MonoBehaviour
         //debugText.text = DeviceModel;
         
         // 장치 이름 확인
-        debugText.text = DeviceName;
+        //debugText.text = DeviceName;
+
+        // 장치 형태 확인
+        debugText.text = DeviceType;
 
         //SystemInfo.deviceType;
         //UnityEngine.DeviceType.Unknown;
@@ -44,7 +47,10 @@ public class PlatformCheck : MonoBehaviour
 
     /// <summary>
     /// 장비 형태를 확인한다. (Enum Code)
-    /// 0 : 
+    /// 0 : Unknown
+    /// 1 : Handheld
+    /// 2 : Console
+    /// 3 : Desktop
     /// </summary>
     public string DeviceType
     {
