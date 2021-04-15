@@ -17,14 +17,12 @@ public class PlatformCheck : MonoBehaviour
         //debugText.text = DeviceName;
 
         // 장치 형태 확인
-        debugText.text = DeviceType;
+        //debugText.text = DeviceType;
 
-        //SystemInfo.deviceType;
-        //UnityEngine.DeviceType.Unknown;
-        //UnityEngine.DeviceType.Handheld;
-        //UnityEngine.DeviceType.Console;
-        //UnityEngine.DeviceType.Desktop;
+        // 장치 고유식별자 확인
+        debugText.text = DeviceUniqueIdentifier;
 
+        //SystemInfo.graphicsDeviceID
     }
 
     /// <summary>
@@ -55,5 +53,14 @@ public class PlatformCheck : MonoBehaviour
     public string DeviceType
     {
         get => SystemInfo.deviceType.ToString();
+    }
+
+    /// <summary>
+    /// 장비만의 고유 식별자를 확인한다.
+    /// [PC] 고유 헤쉬코드 반환
+    /// </summary>
+    public string DeviceUniqueIdentifier
+    {
+        get => SystemInfo.deviceUniqueIdentifier;
     }
 }
