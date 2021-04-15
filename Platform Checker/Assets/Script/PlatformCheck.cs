@@ -20,9 +20,11 @@ public class PlatformCheck : MonoBehaviour
         //debugText.text = DeviceType;
 
         // 장치 고유식별자 확인
-        debugText.text = DeviceUniqueIdentifier;
+        //debugText.text = DeviceUniqueIdentifier;
 
-        //SystemInfo.graphicsDeviceID
+        // 장치 그래픽 ID 반환
+        debugText.text = GraphicsDeviceID.ToString();
+
     }
 
     /// <summary>
@@ -62,5 +64,14 @@ public class PlatformCheck : MonoBehaviour
     public string DeviceUniqueIdentifier
     {
         get => SystemInfo.deviceUniqueIdentifier;
+    }
+
+    /// <summary>
+    /// 그래픽 장치의 ID 반환코드
+    /// [PC] 확인필요, 4자리 숫자 반환값(7942)나옴
+    /// </summary>
+    public int GraphicsDeviceID
+    {
+        get => SystemInfo.graphicsDeviceID;
     }
 }
