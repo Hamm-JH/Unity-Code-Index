@@ -23,9 +23,13 @@ public class PlatformCheck : MonoBehaviour
         //debugText.text = DeviceUniqueIdentifier;
 
         // 장치 그래픽 ID 반환
-        debugText.text = GraphicsDeviceID.ToString();
+        //debugText.text = GraphicsDeviceID.ToString();
 
+        // 장치 그래픽 라이브러리 버전 확인
+        debugText.text = GraphicsDeviceVersion;
     }
+
+    #region Device
 
     /// <summary>
     /// 장비 모델명을 확인한다
@@ -66,6 +70,10 @@ public class PlatformCheck : MonoBehaviour
         get => SystemInfo.deviceUniqueIdentifier;
     }
 
+    #endregion
+
+    #region Graphics
+
     /// <summary>
     /// 그래픽 장치의 ID 반환코드
     /// [PC] 확인필요, 4자리 숫자 반환값(7942)나옴
@@ -74,4 +82,15 @@ public class PlatformCheck : MonoBehaviour
     {
         get => SystemInfo.graphicsDeviceID;
     }
+
+    /// <summary>
+    /// 그래픽 장치의 그래픽 라이브러리 버전을 반환한다.
+    /// [PC] Direct3D 11.0
+    /// </summary>
+    public string GraphicsDeviceVersion
+    {
+        get => SystemInfo.graphicsDeviceVersion;
+    }
+
+    #endregion
 }
