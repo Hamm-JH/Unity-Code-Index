@@ -10,28 +10,43 @@ public class PlatformCheck : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // 장치 모델 확인
-        //debugText.text = DeviceModel;
+        {
+            // 장치 모델 확인
+            //debugText.text = DeviceModel;
 
-        // 장치 이름 확인
-        //debugText.text = DeviceName;
+            // 장치 이름 확인
+            //debugText.text = DeviceName;
 
-        // 장치 형태 확인
-        //debugText.text = DeviceType;
+            // 장치 형태 확인
+            //debugText.text = DeviceType;
 
-        // 장치 고유식별자 확인
-        //debugText.text = DeviceUniqueIdentifier;
+            // 장치 고유식별자 확인
+            //debugText.text = DeviceUniqueIdentifier;
+        } // Device
 
-        // 현재 실행중인 플랫폼 확인
-        //debugText.text = runtimePlatform.ToString();
+        {
+            // 현재 실행중인 플랫폼 확인
+            //debugText.text = runtimePlatform.ToString();
 
-        // 장치 그래픽 ID 반환
-        //debugText.text = GraphicsDeviceID.ToString();
+            // 현재 에디터에서 실행중인지 확인
+            //if (IsEditor) debugText.text = "plays in editor";
+            //else debugText.text = "not plays in editor";
 
-        // 장치 그래픽 라이브러리 버전 확인
-        //debugText.text = GraphicsDeviceVersion;
+            // 현재 모바일에서 실행중인지 확인
+            //if (IsMobilePlatform) debugText.text = "plays in mobile platform";
+            //else debugText.text = "not plays in mobile platform";
+        } // Platform
 
-        //debugText.text = Application.productName;
+        {
+            // 장치 그래픽 ID 반환
+            //debugText.text = GraphicsDeviceID.ToString();
+
+            // 장치 그래픽 라이브러리 버전 확인
+            //debugText.text = GraphicsDeviceVersion;
+
+            // 애플리케이션 이름 확인
+            //debugText.text = Application.productName;
+        } // Graphics
 
     }
 
@@ -75,6 +90,10 @@ public class PlatformCheck : MonoBehaviour
     {
         get => SystemInfo.deviceUniqueIdentifier;
     }
+
+    #endregion
+
+    #region Platform
 
     /// <summary>
     /// 현재 플레이중인 장비의 플랫폼을 확인한다.
@@ -129,6 +148,23 @@ public class PlatformCheck : MonoBehaviour
             return Application.platform;
         }
     }
+
+    /// <summary>
+    /// Editor에서 플레이한 것인지 확인
+    /// </summary>
+    public bool IsEditor
+    {
+        get => Application.isEditor;
+    }
+    
+    /// <summary>
+    /// mobile platform에서 플레이중인지 확인
+    /// </summary> 
+    public bool IsMobilePlatform
+    {
+        get => Application.isMobilePlatform;
+    }
+
 
     #endregion
 
