@@ -11,8 +11,17 @@ public class PlatformCheck : MonoBehaviour
     void Start()
     {
         // 장치 모델 확인
-        debugText.text = DeviceModel;
-        //SystemInfo.deviceName
+        //debugText.text = DeviceModel;
+        
+        // 장치 이름 확인
+        debugText.text = DeviceName;
+
+        //SystemInfo.deviceType;
+        //UnityEngine.DeviceType.Unknown;
+        //UnityEngine.DeviceType.Handheld;
+        //UnityEngine.DeviceType.Console;
+        //UnityEngine.DeviceType.Desktop;
+
     }
 
     /// <summary>
@@ -24,9 +33,21 @@ public class PlatformCheck : MonoBehaviour
         get => SystemInfo.deviceModel;
     }
 
-    
+    /// <summary>
+    /// 장비 이름을 확인한다.
+    /// Win10 : 장비 인식코드 출력 (기본값 6-6 문자, 숫자 결합 코드)
+    /// </summary>
     public string DeviceName
     {
         get => SystemInfo.deviceName;
+    }
+
+    /// <summary>
+    /// 장비 형태를 확인한다. (Enum Code)
+    /// 0 : 
+    /// </summary>
+    public string DeviceType
+    {
+        get => SystemInfo.deviceType.ToString();
     }
 }
