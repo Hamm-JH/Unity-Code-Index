@@ -8,8 +8,6 @@ namespace MIS
     {
         Vector3 downPos;    // 마우스 클릭 시작위치
         Vector3 upPos;      // 마우스 클릭 종료위치
-        bool isDown;
-        bool isUp;
 
         Vector3 dragPrevPos;    // 마우스 드래그 이전위치
         Vector3 dragLastPos;    // 마우스 드래그 이후위치
@@ -73,7 +71,6 @@ namespace MIS
             if(Input.GetMouseButtonDown(0))
             {
                 downPos = Input.mousePosition;  // 클릭 시작위치 할당
-                isDown = true;
 
                 dragPrevPos = downPos;          // 마우스 드래그 이전위치 할당
             }
@@ -92,8 +89,13 @@ namespace MIS
 
                 //-----------------------------------
                 // [드래그 이벤트 발생] Vec3 드래그값 전달
-                //deltaVector
-                Debug.Log("On Drag");
+                // ! : 최소 이동거리 이상 드래그했을 경우 값 전달 고려
+                if (movedDistance > minDistance)
+                {
+                    //deltaVector
+                    Debug.Log("On Drag");
+                }
+
 
                 // 드래그 판단값 갱신
                 dragPrevPos = dragLastPos;
@@ -101,7 +103,6 @@ namespace MIS
             else if(Input.GetMouseButtonUp(0))
             {
                 upPos = Input.mousePosition;
-                isUp = true;
 
                 // 식1 : (클릭 최소이동거리 > 드래그 이동거리) 인가?
                 // 식2 : (클릭 최소이동거리 > 클릭시작위치, 클릭종료위치간 거리) 인가?
@@ -127,8 +128,6 @@ namespace MIS
         {
             downPos = default(Vector3);
             upPos = default(Vector3);
-            isDown = default(bool);
-            isUp = default(bool);
 
             dragPrevPos = default(Vector3);
             dragLastPos = default(Vector3);
