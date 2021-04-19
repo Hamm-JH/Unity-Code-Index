@@ -7,9 +7,33 @@ public class PlatformCheck : MonoBehaviour
 {
     public TextMeshProUGUI debugText;
 
+    private int debugIndex = default(int);
+
     // Start is called before the first frame update
     void Start()
     {
+        debugText.text = "";
+
+        debugText.text += $"Device Model : {DeviceModel}\n";
+        debugText.text += $"Device Name : {DeviceName}\n";
+        debugText.text += $"Device Type : {DeviceType}\n";
+        debugText.text += $"Device Unique id : {DeviceUniqueIdentifier}\n";
+        debugText.text += $"runtime platform : {runtimePlatform.ToString()}\n";
+        if (IsEditor) debugText.text += "plays in editor" + "\n";
+        else debugText.text += "not plays in editor" + "\n";
+        if (IsMobilePlatform) debugText.text += "plays in mobile platform" + "\n";
+        else debugText.text += "not plays in mobile platform" + "\n";
+
+        //if(Input.GetMouseButtonDown(0))
+        //{
+        //    debugText.text += "Mouse Down\n";
+        //}
+
+        //if(Input.touchCount > 0)
+        //{
+        //    debugText.text += $"Touch Count {Input.touchCount}\n";
+        //}
+
         {
             // 장치 모델 확인
             //debugText.text = DeviceModel;
@@ -32,6 +56,7 @@ public class PlatformCheck : MonoBehaviour
             //if (IsEditor) debugText.text = "plays in editor";
             //else debugText.text = "not plays in editor";
 
+
             // 현재 모바일에서 실행중인지 확인
             //if (IsMobilePlatform) debugText.text = "plays in mobile platform";
             //else debugText.text = "not plays in mobile platform";
@@ -48,6 +73,58 @@ public class PlatformCheck : MonoBehaviour
             //debugText.text = Application.productName;
         } // Graphics
 
+    }
+
+    private void Update()
+    {
+        //MouseLog(0);
+        //MouseLog(1);
+        //MouseLog(2);
+
+        TouchLog();
+    }
+
+    private void MouseLog(int code)
+    {
+        if (Input.GetMouseButtonDown(code))
+        {
+            debugText.text = $"M{code} Down";
+        }
+        if (Input.GetMouseButton(code))
+        {
+            debugText.text = $"M{code} Press";
+        }
+        if (Input.GetMouseButtonUp(code))
+        {
+            debugText.text = $"M{code} Up";
+        }
+    }
+
+    private void TouchLog()
+    {
+        if(Input.touchCount > 0)
+        {
+            if(Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                debugText.text = $"T0 Began";
+            }
+            if (Input.GetTouch(0).phase == TouchPhase.Moved)
+            {
+                debugText.text = $"T0 Moved";
+            }
+            if (Input.GetTouch(0).phase == TouchPhase.Stationary)
+            {
+                debugText.text = $"T0 Stationary";
+            }
+            if (Input.GetTouch(0).phase == TouchPhase.Ended)
+            {
+                debugText.text = $"T0 Ended";
+            }
+            if (Input.GetTouch(0).phase == TouchPhase.Canceled)
+            {
+                debugText.text = $"T0 Canceled";
+            }
+        }
     }
 
     #region Device
@@ -156,7 +233,7 @@ public class PlatformCheck : MonoBehaviour
     {
         get => Application.isEditor;
     }
-    
+
     /// <summary>
     /// mobile platform에서 플레이중인지 확인
     /// </summary> 
