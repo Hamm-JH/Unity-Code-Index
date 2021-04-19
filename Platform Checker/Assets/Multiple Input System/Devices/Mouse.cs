@@ -12,7 +12,8 @@ namespace MIS
         Vector3 dragPrevPos;    // 마우스 드래그 이전위치
         Vector3 dragLastPos;    // 마우스 드래그 이후위치
 
-        float minDistance;      // 최소 이동거리 10f로 설정
+        float minDistance;      // 최소 드래그 이동거리 10f로 설정
+        float minimumMovedDistance; // 드래그 이동거리 갱신에 필요한 최소 이동거리 제한값
         float movedDistance;
 
         //#region Module
@@ -46,14 +47,6 @@ namespace MIS
         private void Awake()
         {
             Reset_ClickValues();
-            
-            minDistance = 10f;
-        }
-
-        // Start is called before the first frame update
-        void Start()
-        {
-
         }
 
         // Update is called once per frame
@@ -64,8 +57,8 @@ namespace MIS
                 //-----------------------------------
                 // [스크롤 이벤트 발생] float 스크롤 값 전달 
                 //Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
-                Debug.Log("On Scroll");
-                
+                //Debug.Log("On Scroll");
+                Debug.Log($"On Scroll vector : {Input.GetAxis("Mouse ScrollWheel")}");
             }
 
             if(Input.GetMouseButtonDown(0))
@@ -81,21 +74,24 @@ namespace MIS
 
                 // 드래그 이전위치 - 드래그 이후위치간 거리계산
                 float dragDist = Vector3.Distance(dragPrevPos, dragLastPos);
-                // 클릭중 이동거리 계산
-                movedDistance += dragDist;
-                
-                // 드래그 이동벡터 계산
-                Vector3 deltaVector = dragLastPos - dragPrevPos;
-
-                //-----------------------------------
-                // [드래그 이벤트 발생] Vec3 드래그값 전달
-                // ! : 최소 이동거리 이상 드래그했을 경우 값 전달 고려
-                if (movedDistance > minDistance)
+                if(dragDist > minimumMovedDistance) // 드래그 최소이동거리 제한
                 {
-                    //deltaVector
-                    Debug.Log("On Drag");
-                }
+                    // 클릭중 이동거리 계산
+                    movedDistance += dragDist;
+                
+                    // 드래그 이동벡터 계산
+                    Vector3 deltaVector = dragLastPos - dragPrevPos;
 
+                    //-----------------------------------
+                    // [드래그 이벤트 발생] Vec3 드래그값 전달
+                    // ! : 최소 이동거리 이상 드래그했을 경우 값 전달 고려
+                    if (movedDistance > minDistance)
+                    {
+                        //deltaVector
+                        //Debug.Log("On Drag");
+                        Debug.Log($"On Drag vector : {deltaVector}");
+                    }
+                }
 
                 // 드래그 판단값 갱신
                 dragPrevPos = dragLastPos;
@@ -113,7 +109,8 @@ namespace MIS
                 {
                     //-----------------------------------
                     // [클릭 이벤트 발생] Vec3 클릭 종료위치 전달
-                    Debug.Log("On Click");
+                    //Debug.Log("On Click");
+                    Debug.Log($"On Click position : {upPos}");
                 }
 
                 // 클릭변수 초기화
@@ -122,7 +119,7 @@ namespace MIS
         }
 
         /// <summary>
-        /// 클릭 관련 변수 초기화
+        /// 변수 초기화
         /// </summary>
         private void Reset_ClickValues()
         {
@@ -133,6 +130,9 @@ namespace MIS
             dragLastPos = default(Vector3);
 
             movedDistance = default(float);
+
+            minDistance = 10f;
+            minimumMovedDistance = 0.5f;
         }
     }
 }

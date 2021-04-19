@@ -43,7 +43,8 @@ namespace MIS
 
         public void ImportModule()
         {
-            InputDevice<Mouse>.Module.Init();
+            //InputDevice<Mouse>.Module.Init();
+            InputDevice<TouchScreen>.Module.Init();
             //Mouse.Module.Init();
         }
     }
