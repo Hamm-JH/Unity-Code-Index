@@ -16,6 +16,11 @@ namespace MIS
         float minimumMovedDistance; // 드래그 이동거리 갱신에 필요한 최소 이동거리 제한값
         float movedDistance;
 
+        public override void Init(Def.DeviceParams param)
+        {
+            
+        }
+
         private void Awake()
         {
             Reset_ClickValues();
@@ -147,6 +152,7 @@ namespace MIS
             }
         }
 
+        #region Reset values
         /// <summary>
         /// 변수 초기화
         /// </summary>
@@ -159,9 +165,15 @@ namespace MIS
             dragLastPos = default(Vector3);
 
             movedDistance = default(float);
-
-            minDistance = 20f;
-            minimumMovedDistance = 5f;
         }
+
+        private void Reset_ClickValues(Def.DeviceParams param)
+        {
+            Reset_ClickValues();
+
+            minDistance = param.dragBoundary;
+            minimumMovedDistance = param.minimumDragBoundary;
+        }
+        #endregion
     }
 }

@@ -16,33 +16,10 @@ namespace MIS
         float minimumMovedDistance; // 드래그 이동거리 갱신에 필요한 최소 이동거리 제한값
         float movedDistance;
 
-        //#region Module
-        //private static Mouse module;
-
-        //public static Mouse Module
-        //{
-        //    get
-        //    {
-        //        if(module == null)
-        //        {
-        //            module = FindObjectOfType<Mouse>() as Mouse;
-        //            if(module == null)
-        //            {
-        //                GameObject obj = new GameObject("Mouse");
-        //                Mouse mouse = obj.AddComponent<Mouse>();
-        //                module = mouse;
-        //                obj.transform.SetParent(InputManager.Instance.transform);
-        //            }
-        //        }
-        //        return module;
-        //    }
-        //}
-
-        //public void Init()
-        //{
-
-        //}
-        //#endregion
+        public override void Init(Def.DeviceParams param)
+        {
+            Reset_ClickValues(param);
+        }
 
         private void Awake()
         {
@@ -119,6 +96,7 @@ namespace MIS
             }
         }
 
+        #region Reset values
         /// <summary>
         /// 변수 초기화
         /// </summary>
@@ -131,9 +109,15 @@ namespace MIS
             dragLastPos = default(Vector3);
 
             movedDistance = default(float);
-
-            minDistance = 10f;
-            minimumMovedDistance = 0.5f;
         }
+
+        private void Reset_ClickValues(Def.DeviceParams param)
+        {
+            Reset_ClickValues();
+
+            minDistance = param.dragBoundary;
+            minimumMovedDistance = param.minimumDragBoundary;
+        }
+        #endregion
     }
 }

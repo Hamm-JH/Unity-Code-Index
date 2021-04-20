@@ -5,9 +5,28 @@ using UnityEngine.Events;
 
 namespace MIS
 {
+    #region Serialization class
     [System.Serializable]
-    public class SrDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver
+    public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver
     {
+        [System.Serializable]
+        public struct serializer
+        {
+            [SerializeField]
+            TKey key;
+            [SerializeField]
+            TValue value;
+
+            public void add(TKey _key, TValue _value)
+            {
+                key = _key;
+                value = _value;
+            }
+        }
+
+        [SerializeField]
+        private List<serializer> serial = new List<serializer>();
+
         [SerializeField]
         private List<TKey> keys = new List<TKey>();
         [SerializeField]
@@ -18,9 +37,13 @@ namespace MIS
         {
             keys.Clear();
             values.Clear();
+            serial.Clear();
             foreach (KeyValuePair<TKey, TValue> pair in this)
             {
-                keys.Add(pair.Key); values.Add(pair.Value);
+                serializer s1 = new serializer();
+                s1.add(pair.Key, pair.Value);
+                serial.Add(s1);
+                //keys.Add(pair.Key); values.Add(pair.Value);
             }
         }
 
@@ -40,10 +63,8 @@ namespace MIS
     }
 
     [System.Serializable]
-    public class srDicString : SrDictionary<string, string>
-    {
-
-    }
+    public class UnityEvents : SerializableDictionary<string, UnityEvent> { }
+    #endregion
 
     public class InputManager : MonoBehaviour
     {
@@ -75,21 +96,30 @@ namespace MIS
 
         public UnityEvent newInput = default(UnityEvent);
 
-        public SrDictionary<int, string> srDic;
+        public UnityEvents inputEvents;
+        
+
+        //public DeviceDictionary<InputDevice<T>> deviceList;
+
         // Start is called before the first frame update
         void Start()
         {
             ImportModule();
 
-            srDic = new SrDictionary<int, string>();
-            srDic.Add(0, "Hello");
+            inputEvents = new UnityEvents();
+            inputEvents.Add("t1", new UnityEvent());
+            inputEvents.Add("t20", new UnityEvent());
+
+            //srDic = new SrDictionary<int, string>();
+            //srDic.Add(0, "Hello");
         }
 
         public void ImportModule()
         {
             //InputDevice<Mouse>.Module.Init();
-            InputDevice<TouchScreen>.Module.Init();
-            //Mouse.Module.Init();
+            Def.DeviceParams param = new Def.DeviceParams();
+            param.Init(Def.Platform.MOBILE, Def.Device.TOUCHSCREEN);
+            InputDevice<TouchScreen>.Module.Init(param);
         }
     }
 }

@@ -1,3 +1,4 @@
+using MIS.Def;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,7 +30,7 @@ namespace MIS
             }
         }
 
-        public void Init() { }
+        public abstract void Init(Def.DeviceParams param);
         #endregion
     }
 }
