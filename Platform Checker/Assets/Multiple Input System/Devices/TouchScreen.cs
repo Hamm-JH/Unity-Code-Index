@@ -131,6 +131,19 @@ namespace MIS
 
                 // 각 프레임 터치간격간 값 차이
                 float deltaMagnitudeDiff = touchMagnitudes[0] - touchMagnitudes[1];
+
+                string result =
+                    $"currPos 0 : {touches[0].position}\n" +
+                    $"currPos 1 : {touches[1].position}\n" +
+                    $"prevPos 0 : {touchPrevPoses[0]}\n" +
+                    $"prevPos 1 : {touchPrevPoses[1]}\n" +
+                    $"prevMag 0 : {touchMagnitudes[0]}\n" +
+                    $"currMag 1 : {touchMagnitudes[1]}\n" +
+                    $"deltaMagnitude : {deltaMagnitudeDiff}";
+
+                Debug.Log(result);
+
+                // [줌 인, 아웃 이벤트 발생] float delta값 전달
             }
         }
 
