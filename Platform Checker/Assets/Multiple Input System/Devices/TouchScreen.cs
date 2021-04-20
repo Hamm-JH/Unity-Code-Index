@@ -111,7 +111,27 @@ namespace MIS
         /// <param name="touches"></param>
         private void Touch_Multiple(Touch[] touches)
         {
+            int index = touches.Length;
+            if(index >= 2)
+            {
+                Vector2[] touchPrevPoses = new Vector2[2] { default(Vector2), default(Vector2) };
+                float[] touchMagnitudes = new float[2] { default(float), default(float) };
 
+                // 각 터치 위치의 이전 프레임의 위치를 구함
+                for (int i = 0; i < 2; i++)
+                {
+                    touchPrevPoses[i] = touches[i].position - touches[i].deltaPosition;
+                }
+
+                // 현재 프레임과 이전 프레임 각각의 터치간격을 구함
+                // 0 : 이전 프레임의 터치간격
+                touchMagnitudes[0] = (touchPrevPoses[0] - touchPrevPoses[1]).magnitude;
+                // 1 : 현재 프레임의 터치간격
+                touchMagnitudes[1] = (touches[0].position - touches[1].position).magnitude;
+
+                // 각 프레임 터치간격간 값 차이
+                float deltaMagnitudeDiff = touchMagnitudes[0] - touchMagnitudes[1];
+            }
         }
 
         /// <summary>

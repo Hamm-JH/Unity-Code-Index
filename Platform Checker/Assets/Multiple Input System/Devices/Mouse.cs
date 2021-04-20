@@ -58,7 +58,8 @@ namespace MIS
                 // [스크롤 이벤트 발생] float 스크롤 값 전달 
                 //Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
                 //Debug.Log("On Scroll");
-                Debug.Log($"On Scroll vector : {Input.GetAxis("Mouse ScrollWheel")}");
+                //Debug.Log($"On Scroll vector : {Input.GetAxis("Mouse ScrollWheel")}");
+                Debug.Log($"On Scroll vector : {Input.mouseScrollDelta.y}");
             }
 
             if(Input.GetMouseButtonDown(0))
