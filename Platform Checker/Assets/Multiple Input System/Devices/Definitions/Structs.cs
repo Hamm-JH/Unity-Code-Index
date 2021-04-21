@@ -41,6 +41,17 @@ namespace MIS.Def
         public void Init(Platform platform, Device device)
         {
             Init();
+
+            if(platform == Platform.PC && device == Device.MOUSE)
+            {
+                dragBoundary = 10;
+                minimumDragBoundary = 1;
+            }
+            else if(platform == Platform.MOBILE && device == Device.TOUCHSCREEN)
+            {
+                dragBoundary = 50;
+                minimumDragBoundary = 20;
+            }
         }
     } 
 }

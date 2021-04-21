@@ -94,32 +94,77 @@ namespace MIS
         public void Init() { }
         #endregion
 
-        public UnityEvent newInput = default(UnityEvent);
+        #region Events
+        public UnityEvent<Vector3> OnClick;
 
-        public UnityEvents inputEvents;
-        
+        public UnityEvent<Vector3> OnDrag;
 
-        //public DeviceDictionary<InputDevice<T>> deviceList;
+        public UnityEvent<float> OnZoom;
+        #endregion
 
-        // Start is called before the first frame update
-        void Start()
+        private void Awake()
         {
             ImportModule();
 
-            inputEvents = new UnityEvents();
-            inputEvents.Add("t1", new UnityEvent());
-            inputEvents.Add("t20", new UnityEvent());
-
-            //srDic = new SrDictionary<int, string>();
-            //srDic.Add(0, "Hello");
+            OnClick = new UnityEvent<Vector3>();
+            OnDrag = new UnityEvent<Vector3>();
+            OnZoom = new UnityEvent<float>();
         }
 
         public void ImportModule()
         {
-            //InputDevice<Mouse>.Module.Init();
+            Def.Platform runtimePlatform = RuntimePlatform();
+
             Def.DeviceParams param = new Def.DeviceParams();
-            param.Init(Def.Platform.MOBILE, Def.Device.TOUCHSCREEN);
-            InputDevice<TouchScreen>.Module.Init(param);
+            if (runtimePlatform == Def.Platform.PC)
+            {
+                param.Init(runtimePlatform, Def.Device.MOUSE);
+                InputDevice<Mouse>.Module.Init(param);
+            }
+            else if(runtimePlatform == Def.Platform.MOBILE)
+            {
+                param.Init(runtimePlatform, Def.Device.TOUCHSCREEN);
+                InputDevice<TouchScreen>.Module.Init(param);
+            }
+        }
+
+        /// <summary>
+        /// 플랫폼 코드는 차후 static library로 이전 고려필요
+        /// </summary>
+        /// <returns></returns>
+        private Def.Platform RuntimePlatform()
+        {
+            Def.Platform platform = Def.Platform.NULL;
+
+            if(Application.platform == UnityEngine.RuntimePlatform.WebGLPlayer)
+            {
+                if(Application.isMobilePlatform)
+                {
+                    platform = Def.Platform.MOBILE;
+                }
+                else
+                {
+                    platform = Def.Platform.PC;
+                }
+            }
+            else if(Application.platform == UnityEngine.RuntimePlatform.WindowsEditor)
+            {
+                platform = Def.Platform.PC;
+            }
+            else if(Application.platform == UnityEngine.RuntimePlatform.WindowsPlayer)
+            {
+                platform = Def.Platform.PC;
+            }
+            else if(Application.platform == UnityEngine.RuntimePlatform.Android)
+            {
+                platform = Def.Platform.MOBILE;
+            }
+            else if(Application.platform == UnityEngine.RuntimePlatform.IPhonePlayer)
+            {
+                platform = Def.Platform.MOBILE;
+            }
+
+            return platform;
         }
     }
 }

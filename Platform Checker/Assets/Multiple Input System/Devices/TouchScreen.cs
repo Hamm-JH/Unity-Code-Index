@@ -18,7 +18,7 @@ namespace MIS
 
         public override void Init(Def.DeviceParams param)
         {
-            
+            Reset_ClickValues(param);
         }
 
         private void Awake()

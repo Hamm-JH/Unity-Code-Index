@@ -29,6 +29,8 @@ namespace MIS
         // Update is called once per frame
         void Update()
         {
+            //Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
+            //Debug.Log(Input.mouseScrollDelta.y);
             if(Input.GetAxis("Mouse ScrollWheel") != 0)
             {
                 //-----------------------------------
@@ -36,7 +38,9 @@ namespace MIS
                 //Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
                 //Debug.Log("On Scroll");
                 //Debug.Log($"On Scroll vector : {Input.GetAxis("Mouse ScrollWheel")}");
-                Debug.Log($"On Scroll vector : {Input.mouseScrollDelta.y}");
+
+                //Debug.Log($"On Scroll vector : {Input.mouseScrollDelta.y}");
+                InputManager.Instance.OnZoom.Invoke(Input.mouseScrollDelta.y);
             }
 
             if(Input.GetMouseButtonDown(0))
@@ -67,7 +71,8 @@ namespace MIS
                     {
                         //deltaVector
                         //Debug.Log("On Drag");
-                        Debug.Log($"On Drag vector : {deltaVector}");
+                        //Debug.Log($"On Drag vector : {deltaVector}");
+                        InputManager.Instance.OnDrag.Invoke(deltaVector);
                     }
                 }
 
@@ -88,7 +93,8 @@ namespace MIS
                     //-----------------------------------
                     // [클릭 이벤트 발생] Vec3 클릭 종료위치 전달
                     //Debug.Log("On Click");
-                    Debug.Log($"On Click position : {upPos}");
+                    //Debug.Log($"On Click position : {upPos}");
+                    InputManager.Instance.OnClick.Invoke(upPos);
                 }
 
                 // 클릭변수 초기화
@@ -119,5 +125,13 @@ namespace MIS
             minimumMovedDistance = param.minimumDragBoundary;
         }
         #endregion
+
+        public void Inputs()
+        {
+            
+            if(Input.GetMouseButtonDown(0)) { }
+
+            Touch touch = Input.GetTouch(0);
+        }
     }
 }
